@@ -27,11 +27,11 @@ class ImageDataset(BaseDataSet):
         else:
             raise ValueError(f"Invalid split name {self.split}")
 
-        img_name_list = np.loadtxt(file_list, dtype=np.str)
+        img_name_list = np.loadtxt(file_list, dtype=str)
         if img_name_list.ndim == 2:
-            return img_name_list[:, 0]
-
-        self.files = img_name_list
+            self.files = img_name_list[:, 0]
+        else:
+            self.files = img_name_list
 
     def _load_data(self, index):
         image_A_path    = os.path.join(self.root, 'A', self.files[index])

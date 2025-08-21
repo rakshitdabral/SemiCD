@@ -86,7 +86,8 @@ class Trainer(BaseTrainer):
                 self.wrt_step = (epoch - 1) * len(self.unsupervised_loader) + batch_idx
                 self._write_scalars_tb(logs)
 
-            if batch_idx % int(len(self.unsupervised_loader)*0.9) == 0:
+            # Safety check to prevent division by zero
+            if len(self.unsupervised_loader) > 0 and batch_idx % max(1, int(len(self.unsupervised_loader)*0.9)) == 0:
                 self._write_img_tb(A_l, B_l, target_l, A_ul, B_ul, target_ul, outputs, epoch)
 
             del A_l, B_l, target_l, A_ul, B_ul, target_ul
