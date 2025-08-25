@@ -39,11 +39,19 @@ class ImageDataset(BaseDataSet):
         image_A         = np.asarray(Image.open(image_A_path), dtype=np.float32)
         image_B         = np.asarray(Image.open(image_B_path), dtype=np.float32)
         image_id        = self.files[index].split("/")[-1].split(".")[0]
-        if self.use_weak_lables:
+        
+        # For unsupervised training, we don't need real labels
+        if self.split == "train_unsupervised":
+            # Create a dummy label (all zeros) for unsupervised training
+            # The actual label won't be used in unsupervised loss
+            label = np.zeros((image_A.shape[0], image_A.shape[1]), dtype=np.int32)
+        elif self.use_weak_lables:
             label_path  = os.path.join(self.weak_labels_output, image_id+".png")
+            label = np.asarray(Image.open(label_path), dtype=np.int32)
         else:
             label_path  = os.path.join(self.root, 'label', self.files[index])
-        label = np.asarray(Image.open(label_path), dtype=np.int32)
+            label = np.asarray(Image.open(label_path), dtype=np.int32)
+        
         return image_A, image_B, label, image_id
 
 class CDDataset(BaseDataLoader):

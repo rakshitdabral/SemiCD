@@ -1,13 +1,13 @@
 {
     "name": "SemiCD-Cartosat",
     "experim_name": "SemiCD_Cartosat_semi_5",
-    "sup_percent": 5,
-    "unsup_percent": 5,
-    "n_total_lbl": 1000,
+    "sup_percent": 100,
+    "unsup_percent": 100,
+    "n_total_lbl": 62,
     "n_gpu": 1,
     "diff_lrs": true,
     "ramp_up": 0.1,
-    "unsupervised_w": 5,
+    "unsupervised_w": 3,
     "lr_scheduler": "Poly",
     "use_weak_lables": false,
     "weakly_loss_w": 0.4,
@@ -16,7 +16,7 @@
     "model": {
         "supervised": false,
         "semi": true,
-        "supervised_w": 5,
+        "supervised_w": 3,
         "sup_loss": "FL",
         "un_loss": "MSE",
         "softmax_temp": 1,
@@ -43,7 +43,7 @@
     "optimizer": {
         "type": "SGD",
         "args": {
-            "lr": 1e-2,
+            "lr": 5e-3,
             "weight_decay": 1e-4,
             "momentum": 0.9
         }
@@ -51,7 +51,7 @@
 
     "train_supervised": {
         "data_dir": "./cartosat",
-        "batch_size": 1,
+        "batch_size": 4,
         "crop_size": 256,
         "shuffle": true,
         "base_size": 256,
@@ -82,7 +82,7 @@
 
     "val_loader": {
         "data_dir": "./cartosat",
-        "batch_size": 1,
+        "batch_size": 2,
         "val": true,
         "split": "val",
         "shuffle": false,
@@ -90,15 +90,15 @@
     },
 
     "trainer": {
-        "epochs": 80,
+        "epochs": 100,
         "save_dir": "./saved/Cartosat",
         "save_period": 5,
         "monitor": "max Mean_IoU",
-        "early_stop": 10,
+        "early_stop": 15,
         "tensorboardX": true,
         "log_dir": "./saved/Cartosat",
-        "log_per_iter": 20,
+        "log_per_iter": 10,
         "val": true,
-        "val_per_epochs": 5
+        "val_per_epochs": 3
     }
 }
