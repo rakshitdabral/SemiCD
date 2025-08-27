@@ -25,6 +25,7 @@ from utils.htmlwriter import HTML
 from matplotlib import pyplot as plt
 from utils.helpers import DeNormalize
 import time
+import torch.serialization
 
 def get_imgid_list(Dataset_Path, split, i):
     file_list  = os.path.join(Dataset_Path, 'list', split +".txt")
@@ -82,13 +83,16 @@ def main():
     config['model']['semi'] = False
     model = models.Consistency_ResNet50_CD(num_classes=num_classes, conf=config['model'], testing=True)
     print(f'\n{model}\n')
-    checkpoint = torch.load(args.model)
+    
+    # Add numpy scalar to safe globals for loading older checkpoints
+    torch.serialization.add_safe_globals(['numpy._core.multiarray.scalar'])
+    checkpoint = torch.load(args.model, weights_only=False)
     model = torch.nn.DataParallel(model)
     try:
-        print("Loading the state dictionery...")
+        print("Loading the state dictionary...")
         model.load_state_dict(checkpoint['state_dict'], strict=True)
     except Exception as e:
-        print(f'Some modules are missing: {e}')
+        print("Loading with non-strict mode (auxiliary decoders will be ignored)...")
         model.load_state_dict(checkpoint['state_dict'], strict=False)
     model.eval()
     model.cuda()
@@ -97,7 +101,7 @@ def main():
         os.makedirs('outputs')
     
     #Set HTML
-    web_dir = '/media/lidan/ssd2/SemiCD/outputs/'+config["experim_name"]
+    web_dir = 'outputs/'+config["experim_name"]
     html_results = HTML(web_dir=web_dir, exp_name=config['experim_name']+"--Test--",
                             save_name=config['experim_name'], config=config)
 
@@ -133,7 +137,7 @@ def main():
 
         #SAVE RESULTS
         prediction_im = colorize_mask(prediction, palette)
-        prediction_im.save('/media/lidan/ssd2/SemiCD/outputs/'+config["experim_name"]+'/'+image_id+'.png')
+        prediction_im.save('outputs/'+config["experim_name"]+'/'+image_id+'.png')
     
     #Printing average metrics on test-data
     pixAcc = 1.0 * total_correct / (np.spacing(1) + total_label)
@@ -150,12 +154,12 @@ def main():
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('--config', default='/media/lidan/ssd2/SemiCD/saved/LEVIR-CD/Supervised/SemiCD_(sup)_40/config.json',type=str,
+    parser.add_argument('--config', default='configs/config_carto.json',type=str,
                         help='Path to the config file')
-    parser.add_argument( '--model', default='/media/lidan/ssd2/SemiCD/saved/LEVIR-CD/Supervised/SemiCD_(sup)_40/best_model.pth', type=str,
+    parser.add_argument( '--model', default='saved/Cartosat/SemiCD_Cartosat_semi_5/best_model.pth', type=str,
                         help='Path to the trained .pth model')
     parser.add_argument( '--save', action='store_true', help='Save images')
-    parser.add_argument('--Dataset_Path', default="/media/lidan/ssd2/CDData/WHU-CD-256", type=str,
+    parser.add_argument('--Dataset_Path', default="cartosat/", type=str,
                         help='Path to dataset LEVIR-CD')
     args = parser.parse_args()
     return args
