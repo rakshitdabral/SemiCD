@@ -122,13 +122,13 @@ def create_semisupervised_lists(
 
     # Save files
     write_list("train_supervised.txt", train_supervised)
-    write_list("val_supervised.txt",   val_supervised)
+    write_list("val.txt",   val_supervised)
     write_list("test_supervised.txt",  test_supervised)
     write_list("train_unsupervised.txt", train_unsupervised)
 
     # Optional: full listings for debugging/inspection
-    write_list("all_supervised.txt", sup_files)
-    write_list("all_unsupervised.txt", unsup_files)
+    write_list("100_train_supervised.txt", sup_files)
+    write_list("100_train_unsupervised.txt", unsup_files)
 
     # --- Summary ---
     print("\nSummary")

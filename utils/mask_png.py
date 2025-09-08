@@ -6,8 +6,8 @@ from PIL import Image
 from tqdm import tqdm
 
 # ── Configure these ──────────────────────────────────────────────
-INPUT_DIR  = r"cartosat\label"     # folder containing .tif/.tiff masks
-OUTPUT_DIR = r"cartosat\label_png"     # will be created if missing
+INPUT_DIR  = r"cartocs\label"     # folder containing .tif/.tiff masks
+OUTPUT_DIR = r"cartocs\label_png"     # will be created if missing
 OUTPUT_SIZE = (256, 256)                      # (W, H)
 # ────────────────────────────────────────────────────────────────
 

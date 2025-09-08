@@ -9,3 +9,7 @@
 /saved
 /unlabelled
 *.zip
+/outputs
+/base
+/break
+/results

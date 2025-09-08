@@ -25,7 +25,6 @@ from utils.htmlwriter import HTML
 from matplotlib import pyplot as plt
 from utils.helpers import DeNormalize
 import time
-import torch.serialization
 
 def get_imgid_list(Dataset_Path, split, i):
     file_list  = os.path.join(Dataset_Path, 'list', split +".txt")
@@ -83,16 +82,13 @@ def main():
     config['model']['semi'] = False
     model = models.Consistency_ResNet50_CD(num_classes=num_classes, conf=config['model'], testing=True)
     print(f'\n{model}\n')
-    
-    # Add numpy scalar to safe globals for loading older checkpoints
-    torch.serialization.add_safe_globals(['numpy._core.multiarray.scalar'])
-    checkpoint = torch.load(args.model, weights_only=False)
+    checkpoint = torch.load(args.model , weights_only=False)
     model = torch.nn.DataParallel(model)
     try:
-        print("Loading the state dictionary...")
+        print("Loading the state dictionery...")
         model.load_state_dict(checkpoint['state_dict'], strict=True)
     except Exception as e:
-        print("Loading with non-strict mode (auxiliary decoders will be ignored)...")
+        print(f'Some modules are missing: {e}')
         model.load_state_dict(checkpoint['state_dict'], strict=False)
     model.eval()
     model.cuda()
