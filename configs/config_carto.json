@@ -3,14 +3,14 @@
     "experim_name": "SemiCD_Cartosat_semi_5",
     "sup_percent": 100,
     "unsup_percent": 100,
-    "n_total_lbl": 102,
+    "n_total_lbl": 245,
     "n_gpu": 1,
     "diff_lrs": true,
     "ramp_up": 0.1,
-    "unsupervised_w": 30,
+    "unsupervised_w": 20,
     "lr_scheduler": "Poly",
     "use_weak_lables": true,
-    "weakly_loss_w": 0.3,
+    "weakly_loss_w": 0.2,
     "pretrained": true,
 
     "model": {
@@ -23,12 +23,12 @@
         "aux_constraint": true,
         "aux_constraint_w": 1,
         "confidence_masking": true,
-        "confidence_th": 0.6,
+        "confidence_th": 0.9,
         "drop": 5,
         "drop_rate": 0.5,
         "spatial": true,
-        "cutout": 5,
-        "erase": 0.4,
+        "cutout": 4,
+        "erase": 0.3,
         "vat": 2,
         "xi": 1e-6,
         "eps": 2.0,
@@ -43,14 +43,14 @@
         "type": "SGD",
         "args": {
             "lr": 1e-3,
-            "weight_decay": 5e-4,
+            "weight_decay": 1e-4,
             "momentum": 0.9
         }
     },
 
     "train_supervised": {
         "data_dir": "./cartosat",
-        "batch_size": 16,
+        "batch_size": 32,
         "crop_size": 256,
         "shuffle": true,
         "base_size": 256,
@@ -66,7 +66,7 @@
     "train_unsupervised": {
         "data_dir": "./cartosat",
         "weak_labels_output": "pseudo_labels",
-        "batch_size": 16,
+        "batch_size": 32,
         "crop_size": 256,
         "shuffle": true,
         "base_size": 256,
@@ -93,7 +93,7 @@
         "save_dir": "./saved/Cartosat",
         "save_period": 5,
         "monitor": "max Mean_IoU",
-        "early_stop": 15,
+        "early_stop": 25,
         "tensorboardX": true,
         "log_dir": "./saved/Cartosat",
         "log_per_iter": 20,

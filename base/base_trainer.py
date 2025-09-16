@@ -145,7 +145,7 @@ class BaseTrainer:
 
     def _resume_checkpoint(self, resume_path):
         self.logger.info(f'Loading checkpoint : {resume_path}')
-        checkpoint = torch.load(resume_path)
+        checkpoint = torch.load(resume_path, weights_only=False )
         self.start_epoch = checkpoint['epoch'] + 1
         self.mnt_best = checkpoint['monitor_best']
         self.not_improved_count = 0

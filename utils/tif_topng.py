@@ -6,8 +6,8 @@ from PIL import Image
 from tqdm import tqdm
 
 # ── Configure these ──────────────────────────────────────────────
-INPUT_DIR = r"break\A"                      # folder containing .tif/.tiff
-OUTPUT_DIR = r"break\A_png" # will be created if missing
+INPUT_DIR = r"cartosat_data_12\B"                      # folder containing .tif/.tiff
+OUTPUT_DIR = r"cartosat_data_12\B_png" # will be created if missing
 RGB_BAND_INDEXES = (3, 2, 1)                # 1-based band indices you asked for
 OUTPUT_SIZE = (256, 256)                    # (W, H)
 OUTPUT_BIT_DEPTH = 16                       # 8 or 16
