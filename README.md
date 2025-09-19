@@ -9,27 +9,16 @@ This project provides a framework for:
 
 ## :speech_balloon: Requirements
 
-<<<<<<< HEAD
 This repo was tested with `Window 10`, `Python 3.12.10`, `PyTorch  2.8.0`, and `CUDA 12.7`. However, it should be runnable with recent PyTorch versions (>=1.1.0).
-=======
-This repo was tested with `Ubuntu 18.04.3 LTS`, `Python 3.8`, `PyTorch 1.1.0`, and `CUDA 10.0`. However, it should be runnable with recent PyTorch versions (>=1.1.0).
->>>>>>> 09842fbc3f6e83296311f0d3cc00de3ef153bc3d
 
 The required packages are listed in `requirements.txt`.
 
 ### Installation
 
-<<<<<<< HEAD
 1.  Create and activate a python environment:
     ```bash
     python -m venv "venvname"
     python/Scripts/activate
-=======
-1.  Create and activate a Conda environment:
-    ```bash
-    conda create -n SemiCD python=3.8
-    conda activate SemiCD
->>>>>>> 09842fbc3f6e83296311f0d3cc00de3ef153bc3d
     ```
 
 2.  Install the required packages:
@@ -89,7 +78,6 @@ After preprocessing, your data should be organized in a directory structure that
 │   └── ...
 └── list/
     ├── train_supervised.txt
-<<<<<<< HEAD
     ├── 100_train_supervised.txt
     ├──100_train_unsupervised.txt
     ├── train_unsupervised.txt
@@ -98,13 +86,6 @@ After preprocessing, your data should be organized in a directory structure that
 ```
 
 *   `A` and `B` folders contain the image pairs from the two time points. A is for past B is for present
-=======
-    ├── train_unsupervised.txt
-    └── val.txt
-```
-
-*   `A` and `B` folders contain the image pairs from the two time points.
->>>>>>> 09842fbc3f6e83296311f0d3cc00de3ef153bc3d
 *   `label` folder contains the ground truth change masks.
 *   `list` folder contains text files that define the data splits for training and validation.
 
@@ -135,11 +116,7 @@ The training process is controlled by the parameters in the `configs/config_cart
 *   `"lr"`: The learning rate.
 *   `"save_dir"` and `"log_dir"`: The directories where checkpoints and logs will be saved.
 
-<<<<<<< HEAD
 For example, to train a semi-supervised model with 100% labeled data, you would set `"sup_percent": 100` and ensure `"semi": true` in the `model` section of the config file. To train a fully supervised model, you would set `"model": { "supervised": true, "semi": false }`.
-=======
-For example, to train a semi-supervised model with 10% labeled data, you would set `"sup_percent": 10` and ensure `"semi": true` in the `model` section of the config file. To train a fully supervised model, you would set `"model": { "supervised": true, "semi": false }`.
->>>>>>> 09842fbc3f6e83296311f0d3cc00de3ef153bc3d
 
 ### :point_right: Resuming Training
 
@@ -154,11 +131,7 @@ python train.py --config configs/config_carto.json --resume <path_to_checkpoint.
 The training progress, including loss and metrics, is logged and can be visualized using TensorBoard. To launch TensorBoard, run:
 
 ```bash
-<<<<<<< HEAD
 tensorboard --logdir saved/Cartosat
-=======
-tensorboard --logdir saved/
->>>>>>> 09842fbc3f6e83296311f0d3cc00de3ef153bc3d
 ```
 
 The log files and model checkpoints will be saved in the directory specified by `save_dir` in your config file (e.g., `saved/Cartosat/`).
