@@ -104,24 +104,24 @@ class Trainer(BaseTrainer):
 
             self.lr_scheduler.step(epoch=epoch-1)
 
-            if self.mode == 'supervised':
-                print(
-            f"Epoch {epoch} completed | "
-            f"Ls {self.loss_sup.average:.4f} "
-            f"Lw {self.loss_weakly.average:.4f} "
-            f"PW {self.pair_wise.average:.4f} "
-            f"IoU_l {self.class_iou_l.get(1, 0):.4f}"
-                )   
-            else:
-                print(
-            f"Epoch {epoch} completed | "
-            f"Ls {self.loss_sup.average:.4f} "
-            f"Lu {self.loss_unsup.average:.4f} "
-            f"Lw {self.loss_weakly.average:.4f} "
-            f"PW {self.pair_wise.average:.4f} "
-            f"IoU_l {self.class_iou_l.get(1, 0):.4f} "
-            f"IoU_ul {self.class_iou_ul.get(1, 0):.4f}"
-                )
+            # if self.mode == 'supervised':
+            #     print(
+            # f"Epoch {epoch} completed | "
+            # f"Ls {self.loss_sup.average:.4f} "
+            # f"Lw {self.loss_weakly.average:.4f} "
+            # f"PW {self.pair_wise.average:.4f} "
+            # f"IoU_l {self.class_iou_l.get(1, 0):.4f}"
+            #     )   
+            # else:
+            #     print(
+            # f"Epoch {epoch} completed | "
+            # f"Ls {self.loss_sup.average:.4f} "
+            # f"Lu {self.loss_unsup.average:.4f} "
+            # f"Lw {self.loss_weakly.average:.4f} "
+            # f"PW {self.pair_wise.average:.4f} "
+            # f"IoU_l {self.class_iou_l.get(1, 0):.4f} "
+            # f"IoU_ul {self.class_iou_ul.get(1, 0):.4f}"
+            #     )
 
         return logs
 
