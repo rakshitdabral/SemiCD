@@ -55,10 +55,10 @@ class Trainer(BaseTrainer):
 
         if self.mode == 'supervised':
             dataloader = iter(self.supervised_loader)
-            tbar = tqdm(range(len(self.supervised_loader)), ncols=100)
+            tbar = tqdm(range(len(self.supervised_loader)), ncols=100,disable=not sys.stdout.isatty())
         else:
             dataloader = iter(zip(cycle(self.supervised_loader), self.unsupervised_loader))
-            tbar = tqdm(range(len(self.unsupervised_loader)), ncols=100)
+            tbar = tqdm(range(len(self.unsupervised_loader)), ncols=100,disable=not sys.stdout.isatty())
 
         self._reset_metrics()
         for batch_idx in tbar:
@@ -103,6 +103,25 @@ class Trainer(BaseTrainer):
                 self.pair_wise.average, self.class_iou_l[1], self.class_iou_ul[1]))
 
             self.lr_scheduler.step(epoch=epoch-1)
+
+            if self.mode == 'supervised':
+                print(
+            f"Epoch {epoch} completed | "
+            f"Ls {self.loss_sup.average:.4f} "
+            f"Lw {self.loss_weakly.average:.4f} "
+            f"PW {self.pair_wise.average:.4f} "
+            f"IoU_l {self.class_iou_l.get(1, 0):.4f}"
+                )   
+            else:
+                print(
+            f"Epoch {epoch} completed | "
+            f"Ls {self.loss_sup.average:.4f} "
+            f"Lu {self.loss_unsup.average:.4f} "
+            f"Lw {self.loss_weakly.average:.4f} "
+            f"PW {self.pair_wise.average:.4f} "
+            f"IoU_l {self.class_iou_l.get(1, 0):.4f} "
+            f"IoU_ul {self.class_iou_ul.get(1, 0):.4f}"
+                )
 
         return logs
 

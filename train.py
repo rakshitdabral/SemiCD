@@ -63,11 +63,12 @@ def main(config, resume):
     trainer.train()
 
 if __name__=='__main__':
-    # PARSE THE ARGS
+    # PARSE THE ARGS 
+    #saved/Cartosat/SemiCD_Cartosat_semi_5/checkpoint.pth
     parser = argparse.ArgumentParser(description='PyTorch Training')
     parser.add_argument('-c', '--config', default='configs/config_carto.json',type=str,
                         help='Path to the config file')
-    parser.add_argument('-r', '--resume', default="saved/Cartosat/SemiCD_Cartosat_semi_5/checkpoint.pth", type=str,
+    parser.add_argument('-r', '--resume', default=None, type=str,
                         help='Path to the .pth model checkpoint to resume training')
     parser.add_argument('-d', '--device', default=None, type=str,
                            help='indices of GPUs to enable (default: all)')
